@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Avaliação Matrix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Canvas para Animação de Fundo Matrix -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Card Principal Glassmorphism -->
+    <div class="glass-card">
+        
+        <!-- Tela de Animação de Entrada -->
+        <div id="introScreen">
+            <div class="terminal-loader">
+                <div class="typing-text" id="typewriterText">INICIALIZANDO SISTEMA...</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Avaliação -->
+        <div id="formContainer">
+            <h2 class="title">[ AVALIAÇÃO DE VAGA ]</h2>
+            <form id="vagaForm">
+                <div class="input-group">
+                    <label for="nome">NOME DO CANDIDATO:</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome completo" required autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <label for="idade">IDADE (ANOS):</label>
+                    <input type="number" id="idade" min="0" max="120" placeholder="Ex: 22" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="altura">ALTURA (METROS):</label>
+                    <input type="number" id="altura" step="0.01" min="0" max="3.0" placeholder="Ex: 1.75" required>
+                </div>
+
+                <button type="submit" class="btn-neon">VERIFICAR APTIDÃO</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Modal / Popup Neons de Resposta -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card" id="modalCard">
+            <div class="modal-icon" id="modalIcon"></div>
+            <h3 class="modal-title" id="modalTitle">STATUS DA CANDIDATURA</h3>
+            <p class="modal-message" id="modalMessage"></p>
+            <button class="btn-modal" id="closeModalBtn">REPROCESSAR / FECHAR</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

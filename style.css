@@ -1,0 +1,318 @@
+/* ==========================================================================
+   1. CONFIGURAÇÕES GERAIS E TEMAS (DARK & MATRIX NEON)
+   ========================================================================== */
+:root {
+    --bg-color: #030a05;
+    --matrix-green: #00ff66;
+    --matrix-green-glow: rgba(0, 255, 102, 0.6);
+    --matrix-dark-green: #003b15;
+    --glass-bg: rgba(5, 20, 10, 0.55);
+    --glass-border: rgba(0, 255, 102, 0.3);
+    --text-color: #e0ffe8;
+    --error-red: #ff3366;
+    --error-glow: rgba(255, 51, 102, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Efeito de linhas de TV antiga (Scanlines) */
+body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 10;
+    background-size: 100% 3px, 6px 100%;
+    pointer-events: none;
+}
+
+/* Canvas de Fundo (Efeito Matrix Digital Rain) */
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Container Principal com Efeito Glassmorphism */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 0 25px var(--matrix-green-glow),
+                inset 0 0 15px rgba(0, 255, 102, 0.15);
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 450px;
+    z-index: 20;
+    position: relative;
+}
+
+/* ==========================================================================
+   2. ANIMAÇÃO DE ENTRADA / INTRODUÇÃO
+   ========================================================================== */
+#introScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 220px;
+}
+
+.terminal-loader {
+    width: 100%;
+}
+
+.typing-text {
+    color: var(--matrix-green);
+    font-size: 1.1rem;
+    text-shadow: 0 0 8px var(--matrix-green-glow);
+    border-right: 2px solid var(--matrix-green);
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 20px;
+    animation: blinkCursor 0.75s step-end infinite;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background: rgba(0, 50, 20, 0.6);
+    border: 1px solid var(--matrix-green);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 10px var(--matrix-green-glow);
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--matrix-green);
+    box-shadow: 0 0 12px var(--matrix-green);
+    transition: width 0.1s linear;
+}
+
+/* ==========================================================================
+   3. FORMULÁRIO DE CANDIDATURA
+   ========================================================================== */
+#formContainer {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#formContainer.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2.title {
+    color: var(--matrix-green);
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--matrix-green-glow);
+}
+
+.input-group {
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--matrix-green);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(0, 20, 10, 0.7);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.input-group input:focus {
+    border-color: var(--matrix-green);
+    box-shadow: 0 0 12px var(--matrix-green-glow),
+                inset 0 0 8px rgba(0, 255, 102, 0.2);
+}
+
+button.btn-neon {
+    width: 100%;
+    padding: 14px;
+    margin-top: 1rem;
+    background: rgba(0, 255, 102, 0.1);
+    border: 1px solid var(--matrix-green);
+    color: var(--matrix-green);
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px var(--matrix-green-glow);
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+}
+
+button.btn-neon:hover {
+    background: var(--matrix-green);
+    color: #000;
+    box-shadow: 0 0 20px var(--matrix-green),
+                0 0 40px var(--matrix-green-glow);
+}
+
+/* ==========================================================================
+   4. MODAL / POPUP DE RESPOSTA ANIMADO
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: var(--glass-bg);
+    border-radius: 16px;
+    padding: 2.5rem;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    transform: scale(0.7) translateY(-30px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Sucesso */
+.modal-card.success {
+    border: 2px solid var(--matrix-green);
+    box-shadow: 0 0 30px var(--matrix-green-glow);
+}
+
+.modal-card.success .modal-title {
+    color: var(--matrix-green);
+    text-shadow: 0 0 10px var(--matrix-green-glow);
+}
+
+/* Modal Erro */
+.modal-card.error {
+    border: 2px solid var(--error-red);
+    box-shadow: 0 0 30px var(--error-glow);
+}
+
+.modal-card.error .modal-title {
+    color: var(--error-red);
+    text-shadow: 0 0 10px var(--error-glow);
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.modal-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.modal-message {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: #ffffff;
+}
+
+.btn-modal {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    background: transparent;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.success .btn-modal {
+    border: 1px solid var(--matrix-green);
+    color: var(--matrix-green);
+}
+
+.success .btn-modal:hover {
+    background: var(--matrix-green);
+    color: #000;
+    box-shadow: 0 0 15px var(--matrix-green);
+}
+
+.error .btn-modal {
+    border: 1px solid var(--error-red);
+    color: var(--error-red);
+}
+
+.error .btn-modal:hover {
+    background: var(--error-red);
+    color: #fff;
+    box-shadow: 0 0 15px var(--error-red);
+}
+
+/* Keyframes */
+@keyframes blinkCursor {
+    from, to { border-color: transparent }
+    50% { border-color: var(--matrix-green); }
+}
