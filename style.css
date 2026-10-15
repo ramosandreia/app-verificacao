@@ -1,16 +1,17 @@
 /* ==========================================================================
-   1. CONFIGURAÇÕES GERAIS E TEMAS (DARK & MATRIX NEON)
+   1. CONFIGURAÇÕES GERAIS E TEMAS (DARK & FIRE NEON)
    ========================================================================== */
 :root {
-    --bg-color: #030a05;
-    --matrix-green: #00ff66;
-    --matrix-green-glow: rgba(0, 255, 102, 0.6);
-    --matrix-dark-green: #003b15;
-    --glass-bg: rgba(5, 20, 10, 0.55);
-    --glass-border: rgba(0, 255, 102, 0.3);
-    --text-color: #e0ffe8;
-    --error-red: #ff3366;
-    --error-glow: rgba(255, 51, 102, 0.6);
+    --bg-color: #080201;
+    --fire-orange: #ff5500;
+    --fire-yellow: #ffcc00;
+    --fire-red: #ff1100;
+    --fire-glow: rgba(255, 85, 0, 0.6);
+    --glass-bg: rgba(20, 6, 2, 0.65);
+    --glass-border: rgba(255, 120, 0, 0.35);
+    --text-color: #fff3e6;
+    --error-red: #ff2244;
+    --error-glow: rgba(255, 34, 68, 0.6);
 }
 
 * {
@@ -31,21 +32,21 @@ body {
     position: relative;
 }
 
-/* Efeito de linhas de TV antiga (Scanlines) */
+/* Efeito de ambiente incandescente */
 body::before {
     content: " ";
     display: block;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background: radial-gradient(circle at 50% 100%, rgba(255, 68, 0, 0.2), transparent 70%),
+                linear-gradient(rgba(10, 2, 0, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
     z-index: 10;
-    background-size: 100% 3px, 6px 100%;
+    background-size: 100% 100%, 100% 4px;
     pointer-events: none;
 }
 
-/* Canvas de Fundo (Efeito Matrix Digital Rain) */
-#matrixCanvas {
+/* Canvas de Fundo (Fagulhas em Chamas) */
+#fireCanvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -54,15 +55,15 @@ body::before {
     z-index: 1;
 }
 
-/* Container Principal com Efeito Glassmorphism */
+/* Container Principal com Efeito Glassmorphism de Fogo */
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    box-shadow: 0 0 25px var(--matrix-green-glow),
-                inset 0 0 15px rgba(0, 255, 102, 0.15);
+    box-shadow: 0 0 30px var(--fire-glow),
+                inset 0 0 15px rgba(255, 85, 0, 0.2);
     padding: 2.5rem;
     width: 90%;
     max-width: 450px;
@@ -87,10 +88,10 @@ body::before {
 }
 
 .typing-text {
-    color: var(--matrix-green);
-    font-size: 1.1rem;
-    text-shadow: 0 0 8px var(--matrix-green-glow);
-    border-right: 2px solid var(--matrix-green);
+    color: var(--fire-yellow);
+    font-size: 1.05rem;
+    text-shadow: 0 0 10px var(--fire-glow);
+    border-right: 2px solid var(--fire-yellow);
     white-space: nowrap;
     overflow: hidden;
     margin-bottom: 20px;
@@ -100,18 +101,18 @@ body::before {
 .progress-bar-container {
     width: 100%;
     height: 10px;
-    background: rgba(0, 50, 20, 0.6);
-    border: 1px solid var(--matrix-green);
+    background: rgba(40, 10, 0, 0.6);
+    border: 1px solid var(--fire-orange);
     border-radius: 5px;
     overflow: hidden;
-    box-shadow: 0 0 10px var(--matrix-green-glow);
+    box-shadow: 0 0 10px var(--fire-glow);
 }
 
 .progress-bar {
     width: 0%;
     height: 100%;
-    background-color: var(--matrix-green);
-    box-shadow: 0 0 12px var(--matrix-green);
+    background: linear-gradient(90deg, var(--fire-red), var(--fire-orange), var(--fire-yellow));
+    box-shadow: 0 0 12px var(--fire-yellow);
     transition: width 0.1s linear;
 }
 
@@ -132,13 +133,13 @@ body::before {
 }
 
 h2.title {
-    color: var(--matrix-green);
+    color: var(--fire-yellow);
     text-align: center;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 0 0 10px var(--matrix-green-glow);
+    text-shadow: 0 0 12px var(--fire-glow);
 }
 
 .input-group {
@@ -149,7 +150,7 @@ h2.title {
 .input-group label {
     display: block;
     margin-bottom: 0.4rem;
-    color: var(--matrix-green);
+    color: var(--fire-yellow);
     font-size: 0.9rem;
     letter-spacing: 1px;
 }
@@ -157,7 +158,7 @@ h2.title {
 .input-group input {
     width: 100%;
     padding: 12px 15px;
-    background: rgba(0, 20, 10, 0.7);
+    background: rgba(20, 5, 0, 0.7);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
     color: #ffffff;
@@ -168,18 +169,18 @@ h2.title {
 }
 
 .input-group input:focus {
-    border-color: var(--matrix-green);
-    box-shadow: 0 0 12px var(--matrix-green-glow),
-                inset 0 0 8px rgba(0, 255, 102, 0.2);
+    border-color: var(--fire-yellow);
+    box-shadow: 0 0 14px var(--fire-glow),
+                inset 0 0 8px rgba(255, 85, 0, 0.3);
 }
 
 button.btn-neon {
     width: 100%;
     padding: 14px;
     margin-top: 1rem;
-    background: rgba(0, 255, 102, 0.1);
-    border: 1px solid var(--matrix-green);
-    color: var(--matrix-green);
+    background: rgba(255, 85, 0, 0.15);
+    border: 1px solid var(--fire-orange);
+    color: var(--fire-yellow);
     font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -187,15 +188,15 @@ button.btn-neon {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-shadow: 0 0 5px var(--matrix-green-glow);
-    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+    text-shadow: 0 0 6px var(--fire-glow);
+    box-shadow: 0 0 12px rgba(255, 85, 0, 0.3);
 }
 
 button.btn-neon:hover {
-    background: var(--matrix-green);
+    background: linear-gradient(90deg, var(--fire-orange), var(--fire-yellow));
     color: #000;
-    box-shadow: 0 0 20px var(--matrix-green),
-                0 0 40px var(--matrix-green-glow);
+    box-shadow: 0 0 25px var(--fire-orange),
+                0 0 45px var(--fire-glow);
 }
 
 /* ==========================================================================
@@ -207,7 +208,7 @@ button.btn-neon:hover {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(5, 1, 0, 0.88);
     backdrop-filter: blur(8px);
     z-index: 100;
     display: flex;
@@ -241,24 +242,24 @@ button.btn-neon:hover {
 
 /* Modal Sucesso */
 .modal-card.success {
-    border: 2px solid var(--matrix-green);
-    box-shadow: 0 0 30px var(--matrix-green-glow);
+    border: 2px solid var(--fire-yellow);
+    box-shadow: 0 0 35px var(--fire-glow);
 }
 
 .modal-card.success .modal-title {
-    color: var(--matrix-green);
-    text-shadow: 0 0 10px var(--matrix-green-glow);
+    color: var(--fire-yellow);
+    text-shadow: 0 0 12px var(--fire-glow);
 }
 
 /* Modal Erro */
 .modal-card.error {
     border: 2px solid var(--error-red);
-    box-shadow: 0 0 30px var(--error-glow);
+    box-shadow: 0 0 35px var(--error-glow);
 }
 
 .modal-card.error .modal-title {
     color: var(--error-red);
-    text-shadow: 0 0 10px var(--error-glow);
+    text-shadow: 0 0 12px var(--error-glow);
 }
 
 .modal-icon {
@@ -290,14 +291,14 @@ button.btn-neon:hover {
 }
 
 .success .btn-modal {
-    border: 1px solid var(--matrix-green);
-    color: var(--matrix-green);
+    border: 1px solid var(--fire-yellow);
+    color: var(--fire-yellow);
 }
 
 .success .btn-modal:hover {
-    background: var(--matrix-green);
+    background: var(--fire-yellow);
     color: #000;
-    box-shadow: 0 0 15px var(--matrix-green);
+    box-shadow: 0 0 18px var(--fire-yellow);
 }
 
 .error .btn-modal {
@@ -308,11 +309,11 @@ button.btn-neon:hover {
 .error .btn-modal:hover {
     background: var(--error-red);
     color: #fff;
-    box-shadow: 0 0 15px var(--error-red);
+    box-shadow: 0 0 18px var(--error-red);
 }
 
 /* Keyframes */
 @keyframes blinkCursor {
     from, to { border-color: transparent }
-    50% { border-color: var(--matrix-green); }
+    50% { border-color: var(--fire-yellow); }
 }

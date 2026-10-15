@@ -1,7 +1,7 @@
 /* ==========================================================================
-   1. EFEITO MATRIX DIGITAL RAIN (CANVAS)
+   1. EFEITO CANVA DE FAGULHAS DE FOGO (FIRE SPARKS)
    ========================================================================== */
-const canvas = document.getElementById('matrixCanvas');
+const canvas = document.getElementById('fireCanvas');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
@@ -11,47 +11,70 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-// Caracteres estilo Matrix
-const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-const alphabet = katakana + latin;
-
-const fontSize = 16;
-let columns = Math.floor(canvas.width / fontSize);
-let rainDrops = [];
-
-function initRain() {
-    columns = Math.floor(canvas.width / fontSize);
-    rainDrops = [];
-    for (let i = 0; i < columns; i++) {
-        rainDrops[i] = Math.random() * -100;
+class Spark {
+    constructor() {
+        this.reset();
     }
-}
-initRain();
-window.addEventListener('resize', initRain);
 
-function drawMatrix() {
-    ctx.fillStyle = 'rgba(3, 10, 5, 0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 2 + 1.2;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.opacity = Math.random() * 0.8 + 0.2;
+        
+        // Cores em tons de amarelo, laranja e vermelho incandescente
+        const colors = [
+            '#ffcc00', // Amarelo
+            '#ff8800', // Laranja claro
+            '#ff4400', // Laranja escuro
+            '#ff1100'  // Vermelho
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
 
-    ctx.fillStyle = '#00ff66';
-    ctx.font = fontSize + 'px monospace';
+    update() {
+        this.y -= this.speedY;
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5;
+        this.opacity -= 0.003;
 
-    for (let i = 0; i < rainDrops.length; i++) {
-        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-        const x = i * fontSize;
-        const y = rainDrops[i] * fontSize;
-
-        ctx.fillText(text, x, y);
-
-        if (y > canvas.height && Math.random() > 0.975) {
-            rainDrops[i] = 0;
+        if (this.y < -10 || this.opacity <= 0) {
+            this.reset();
         }
-        rainDrops[i]++;
+    }
+
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
     }
 }
 
-setInterval(drawMatrix, 35);
+const sparkCount = 120;
+const sparks = [];
+for (let i = 0; i < sparkCount; i++) {
+    sparks.push(new Spark());
+}
+
+function animateSparks() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let spark of sparks) {
+        spark.update();
+        spark.draw();
+    }
+
+    requestAnimationFrame(animateSparks);
+}
+animateSparks();
 
 /* ==========================================================================
    2. ANIMAÇÃO DE ENTRADA DO SISTEMA (INTRO)
@@ -62,9 +85,9 @@ const typewriterText = document.getElementById('typewriterText');
 const progressBar = document.getElementById('progressBar');
 
 const introMessages = [
-    "INICIALIZANDO SISTEMA...",
-    "CARREGANDO MÓDULOS DE AVALIAÇÃO...",
-    "CONECTANDO AO BANCO DE DADOS...",
+    "INICIALIZANDO SISTEMA DE CHAMAS...",
+    "CARREGANDO CRITÉRIOS DE SELEÇÃO...",
+    "ESTABILIZANDO NÚCLEO DE DADOS...",
     "SISTEMA PRONTO."
 ];
 
@@ -86,7 +109,7 @@ function runIntro() {
                 formContainer.classList.add('show');
             }, 400);
         }
-    }, 50);
+    }, 40);
 }
 
 window.addEventListener('load', runIntro);
@@ -112,7 +135,7 @@ vagaForm.addEventListener('submit', function(e) {
     // Critério: Altura >= 1.70 e Idade >= 18
     if (altura >= 1.70 && idade >= 18) {
         modalCard.className = 'modal-card success';
-        modalIcon.textContent = '⚡';
+        modalIcon.textContent = '🔥';
         modalTitle.textContent = 'ACESSO CONCEDIDO';
         modalMessage.innerHTML = `Olá, <strong>${nome}</strong>!<br>Parabéns! Você pode prosseguir no processo para a vaga!`;
     } else {
